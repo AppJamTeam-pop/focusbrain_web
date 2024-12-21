@@ -3,9 +3,11 @@ import * as S from './style'
 import Input from "src/components/input";
 import useUser from "src/hooks/useUser";
 import Header from "src/components/header";
+import {useNavigate} from "react-router-dom";
 
 const Signup = () => {
     const signup = useUser(false);
+    const navigate = useNavigate();
     const [user, setUser] = React.useState('');
     const [password, setPassword] = React.useState('');
     return (
@@ -15,7 +17,7 @@ const Signup = () => {
                 <S.Title>회원가입</S.Title>
                 <Input name='아이디' value={user} setValue={setUser} type={'string'} />
                 <Input name='비밀번호' value={password} setValue={setPassword} type={'password'} />
-                <S.Button onClick={() => signup.Request(user,password)}>
+                <S.Button onClick={() => signup.Request(user,password).catch(err => navigate('/'))}>
                     가입하기
                 </S.Button>
             </S.Form>
